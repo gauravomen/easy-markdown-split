@@ -10,6 +10,14 @@ interface MarkdownPreviewProps {
   content: string;
 }
 
+// Define proper types for code components
+interface CodeProps {
+  node?: any;
+  inline?: boolean;
+  className?: string;
+  children?: React.ReactNode;
+}
+
 const MarkdownPreview = ({ content }: MarkdownPreviewProps) => {
   return (
     <div className="h-full border rounded-md overflow-auto bg-white">
@@ -21,7 +29,7 @@ const MarkdownPreview = ({ content }: MarkdownPreviewProps) => {
           remarkPlugins={[remarkGfm]}
           rehypePlugins={[rehypeRaw]}
           components={{
-            code({ node, inline, className, children, ...props }) {
+            code({ node, inline, className, children, ...props }: CodeProps) {
               const match = /language-(\w+)/.exec(className || '');
               return !inline && match ? (
                 <SyntaxHighlighter
